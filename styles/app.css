@@ -1,0 +1,15 @@
+@tailwind base;
+@layer base {
+	*::-webkit-scrollbar {
+		width: 0px;
+	}
+	* {
+		scrollbar-width: 0px !important;
+	}
+	html,
+	body {
+		@apply font-avenir bg-accents min-h-screen w-full h-full overflow-x-hidden overflow-y-hidden;
+	}
+}
+@tailwind components;
+@tailwind utilities;
