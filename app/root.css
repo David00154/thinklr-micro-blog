@@ -3222,6 +3222,30 @@ html,
   background-color: rgb(26 26 26 / 0.25);
 }
 
+.last\:mb-5:last-child {
+  margin-bottom: 1.25rem;
+}
+
+.last\:mb-8:last-child {
+  margin-bottom: 2rem;
+}
+
+.last\:mb-12:last-child {
+  margin-bottom: 3rem;
+}
+
+.last\:mb-20:last-child {
+  margin-bottom: 5rem;
+}
+
+.last\:mb-24:last-child {
+  margin-bottom: 6rem;
+}
+
+.last\:mb-\[90px\]:last-child {
+  margin-bottom: 90px;
+}
+
 .hover\:bg-accents\/40:hover {
   background-color: rgb(26 26 26 / 0.4);
 }
@@ -3306,5 +3330,9 @@ html,
 
   .md\:text-\[14\.6px\] {
     font-size: 14.6px;
+  }
+
+  .md\:last\:mb-\[90px\]:last-child {
+    margin-bottom: 90px;
   }
 }

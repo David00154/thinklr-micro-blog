@@ -113,6 +113,24 @@ const BottomNav: FC = () => {
             },
         ]
     )
+    const RenderIconLinkWithBadge: FC<{ fallBack: ReactElement; isActive: boolean; hasBadge: boolean; icon: IconType; activeIcon: IconType; }> = ({ hasBadge, isActive, fallBack: FallBack, icon: Icon, activeIcon: ActiveIcon }) => {
+        return (
+            <>
+                {hasBadge ? (
+                    <div className="indicator">
+                        {isActive ? (
+                            <ActiveIcon size={25} className="text-primary nav" />
+                        ) : (
+                            <Icon size={25} className="text-quaternary nav" />
+                        )}
+                        <span className="badge right-[5px] top-[6px] badge-xs  badge-success indicator-item"></span>
+                    </div>
+                ) : (
+                    FallBack
+                )}
+            </>
+        )
+    }
     return (
         <div className="btm-nav md:hidden bg-secondary">
             {links.map(({ icon: Icon, url = "", activeIcon: ActiveIcon, hasBadge = false }, i) => {
@@ -144,49 +162,6 @@ const BottomNav: FC = () => {
                     </button>
                 )
             })}
-            {/* <button>
-                <Link to={"/search"} className="btn border-none bg-transparent hover:bg-transparent">
-                    <FiSearch size={23} className="text-quaternary" />
-                </Link>
-            </button>
-            <button>
-                <Link to={""} className="btn border-none bg-transparent hover:bg-transparent">
-                    <AiOutlineMessage size={25} className="text-quaternary" />
-                </Link>
-            </button>
-            <button>
-                <Link to={"notifications"} className="btn border-none bg-transparent hover:bg-transparent">
-                    <div className="indicator">
-                        <TfiBell size={25} className="text-quaternary nav" />
-                        <span className="badge right-[5px] top-[6px] badge-xs h-[11px] badge-success indicator-item"></span>
-                    </div>
-                </Link>
-            </button>
-            <button>
-                <Link to={""} className="btn border-none bg-transparent hover:bg-transparent">
-                    <RiHeart2Line size={25} className="text-quaternary" />
-                </Link>
-            </button> */}
         </div>
     )
 }
-
-const RenderIconLinkWithBadge: FC<{ fallBack: ReactElement; isActive: boolean; hasBadge: boolean; icon: IconType; activeIcon: IconType; }> = ({ hasBadge, isActive, fallBack: FallBack, icon: Icon, activeIcon: ActiveIcon }) => {
-    return (
-        <>
-            {hasBadge ? (
-                <div className="indicator">
-                    {isActive ? (
-                        <ActiveIcon size={25} className="text-primary nav" />
-                    ) : (
-                        <Icon size={25} className="text-quaternary nav" />
-                    )}
-                    <span className="badge right-[5px] top-[6px] badge-xs  badge-success indicator-item"></span>
-                </div>
-            ) : (
-                FallBack
-            )}
-        </>
-    )
-}
-// const matchRoute = (route: string): string | null | undefined => route.match(/\/*\/*/)?.input

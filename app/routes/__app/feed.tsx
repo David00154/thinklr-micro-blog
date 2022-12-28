@@ -1,9 +1,10 @@
 import { LoaderArgs } from "@remix-run/node";
-import { Link } from "@remix-run/react";
-import { FC, ReactElement } from "react";
-import { AiOutlineMessage } from "react-icons/ai";
-import { HiHome } from "react-icons/hi";
-import { RiHeart2Line } from "react-icons/ri";
+import { Link, NavLink } from "@remix-run/react";
+import { FC, ReactElement, useState } from "react";
+import { IconType } from "react-icons";
+import { AiFillMessage, AiOutlineMessage } from "react-icons/ai";
+import { HiHome, HiOutlineHome } from "react-icons/hi";
+import { RiHeart2Fill, RiHeart2Line } from "react-icons/ri";
 import { TfiBell } from "react-icons/tfi";
 import { VscDiffAdded } from "react-icons/vsc";
 import AddPostCard from "~/components/addPostCard";
@@ -13,7 +14,7 @@ import PostCard from "~/components/postCard";
 
 export default function Feed() {
     return (
-        <div className="h-screen flex flex-col gap-5">
+        <div className="h-screen flex flex-col">
             <MobileNav />
             <FeedHead>
                 <AddPostCard />
@@ -40,9 +41,86 @@ const FeedHead: FC<{ children: ReactElement[] | ReactElement }> = ({ children })
 }
 // 
 export const Nav: FC = () => {
+    type LinksType = {
+        url?: string;
+        icon: IconType;
+        hasBadge?: boolean;
+        activeIcon: IconType
+    }
+    const [links, _] = useState<LinksType[]>(
+        [
+            {
+                activeIcon: HiHome,
+                icon: HiOutlineHome,
+                url: "/feed"
+            },
+            {
+                icon: AiOutlineMessage,
+                url: "",
+                activeIcon: AiFillMessage
+            },
+            {
+                icon: TfiBell,
+                url: "/notifications",
+                activeIcon: TfiBell,
+                hasBadge: true
+            },
+            {
+                icon: RiHeart2Line,
+                url: "/followers",
+                activeIcon: RiHeart2Fill
+            },
+        ]
+    )
+
+    const RenderIconLinkWithBadge: FC<{ fallBack: ReactElement; isActive: boolean; hasBadge: boolean; icon: IconType; activeIcon: IconType; }> = ({ hasBadge, isActive, fallBack: FallBack, icon: Icon, activeIcon: ActiveIcon }) => {
+        return (
+            <>
+                {hasBadge ? (
+                    <div className="indicator">
+                        {isActive ? (
+                            <ActiveIcon size={25} className="text-primary nav" />
+                        ) : (
+                            <Icon size={25} className="text-quaternary nav" />
+                        )}
+                        <span className="badge right-[5px] top-[6px] badge-xs h-[11px] badge-success indicator-item"></span>
+                    </div>
+                ) : (
+                    FallBack
+                )}
+            </>
+        )
+    }
+
     return (
         <nav className="items-center hidden md:flex py-6 justify-center gap-12 bg-accents">
-            <Link to={"/"} className="btn border-none bg-transparent hover:bg-transparent">
+            {links.map(({ icon: Icon, url = "", activeIcon: ActiveIcon, hasBadge = false }, i) => (
+                <button key={i}>
+                    <NavLink to={url} className="btn border-none bg-transparent hover:bg-transparent">
+                        {({ isActive }) => (
+                            <>
+                                {isActive ? (
+                                    <RenderIconLinkWithBadge
+                                        fallBack={<ActiveIcon size={25} className={"text-primary"} />}
+                                        hasBadge={hasBadge}
+                                        icon={Icon}
+                                        activeIcon={ActiveIcon}
+                                        isActive={isActive} />
+                                ) : (
+                                    <RenderIconLinkWithBadge
+                                        fallBack={<Icon size={25} className={"text-quaternary"
+                                        } />}
+                                        activeIcon={ActiveIcon}
+                                        hasBadge={hasBadge}
+                                        icon={Icon}
+                                        isActive={isActive} />
+                                )}
+                            </>
+                        )}
+                    </NavLink>
+                </button>
+            ))}
+            {/* <Link to={"/"} className="btn border-none bg-transparent hover:bg-transparent">
                 <HiHome size={25} className="text-primary" />
             </Link>
             <Link to={""} className="btn border-none bg-transparent hover:bg-transparent">
@@ -56,7 +134,7 @@ export const Nav: FC = () => {
             </Link>
             <Link to={""} className="btn border-none bg-transparent hover:bg-transparent">
                 <RiHeart2Line size={25} className="text-quaternary" />
-            </Link>
+            </Link> */}
         </nav>
     )
 }

@@ -7,7 +7,7 @@ import { ImFilePicture } from "react-icons/im"
 
 const PostCard = () => {
     return (
-        <Link to={""} className="md:p-5 p-4 mt-5 bg-secondary md:rounded-2xl rounded-lg h-auto">
+        <Link to={""} className="md:p-5 p-4 md:last:mb-[90px] mt-5 bg-secondary md:rounded-2xl rounded-lg h-auto">
             {/* Head */}
             <div className="flex gap-6 w-full mb-2">
                 {/* Profile Picture */}
